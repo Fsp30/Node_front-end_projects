@@ -3,23 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Lista de Tarefas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #444;
+        }
+
+        nav {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .list {
+            width: 55%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            height: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form_group {
+            width: 40%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border-color: #66b3ff;
+            outline: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #388e3c;
+        }
+
+        ::placeholder {
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .list {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .form_group {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Lista de Tarefas</h1>
-    <form action="/add" method="POST">
-        <input type="text" name="task" placeholder="Nova tarefa" required>
-        <button type="submit">Adicionar</button>
-    </form>
-    <ul>
-        <% tasks.forEach((task, index) => { %>
-            <li>
-                <%= task %>
-                <form action="/delete/<%= index %>" method="POST" style="display:inline;">
-                    <button type="submit">Remover</button>
-                </form>
-            </li>
-        <% }) %>
-    </ul>
+    <div class="content">
+        <div class="form_group">
+            <form action="/add" method="POST">
+                <input type="text" name="task" placeholder="Nova tarefa" required>
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+        <div class="list">
+            <ul>
+                <% if (tasks.length === 0) { %>
+                    <p>Sem tarefas</p>
+                <% } else { %>
+                    <% tasks.forEach((task, index) => { %>
+                        <li>
+                            <%= task %>
+                            <form action="/delete/<%= index %>" method="POST" style="display:inline;">
+                                <button type="submit">Remover</button>
+                            </form>
+                        </li>
+                    <% }) %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
