@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Clima</title>
+</head>
+<body>
+  <h1>Consulta de Clima</h1>
+
+  <input type="text" id="city" placeholder="Digite o nome da cidade" />
+  <button onclick="getClimate()">Buscar</button>
+
+  <div id="resultado">
+    <h3 id="cidade-nome"></h3>
+    <p id="temperatura"></p>
+    <p id="descricao"></p>
+    <p id="umidade"></p>
+    <p id="vento"></p>
+    <img id="icone-clima" alt="Ícone do clima"/>
+    <p id="erro-msg" style="color: red;"></p>
+  </div>
+
+  <script>
+    async function getClimate() {
+      const city = document.getElementById('city').value;
+      const url = `http://localhost:4200/?city=${city}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById('erro-msg').textContent = data.error;
+          return;
+        }
+
+        document.getElementById('erro-msg').textContent = '';
+        document.getElementById('cidade-nome').textContent = data.city;
+        document.getElementById('temperatura').textContent = `Temperatura: ${data.temp}°C`;
+        document.getElementById('descricao').textContent = `Descrição: ${data.description}`;
+        document.getElementById('umidade').textContent = `Umidade: ${data.humidity}%`;
+        document.getElementById('vento').textContent = `Vento: ${data.wind} m/s`;
+        document.getElementById('icone-clima').src = data.icon;
+      } catch (error) {
+        document.getElementById('erro-msg').textContent = 'Erro ao buscar dados de clima.';
+      }
+    }
+  </script>
+</body>
+</html>
