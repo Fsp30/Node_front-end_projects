@@ -1,0 +1,25 @@
+.content {
+        background: linear-gradient(90deg, #020024 0%, rgba(9,113,121,1) 44%, rgba(0,212,255,1) 100%);
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        position: fixed;
+}
+
+body {
+        margin: 0;
+}
+
+@media (max-width: 768px) {
+.content {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+}
+}
+      
