@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { ThemeContext } from "./themes/ThemeProvider";
 import ThemeCustomizer from "./components/ThemeCustomizer";
@@ -29,10 +29,21 @@ const Title = styled.h1`
 function App() {
   const { toggleTheme } = useContext(ThemeContext);
   const [customTheme, setCustomTheme] = useState({
-    background: "#ffffff",
-    text: "#000000",
-    primary: "#6200ea",
+    background: "#121212",
+    text: "#ffffff",
+    primary: "#bb86fc"
   });
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("customTheme");
+    if (savedTheme) {
+      setCustomTheme(JSON.parse(savedTheme))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("customTheme", JSON.stringify(customTheme))
+  }, [customTheme])
 
   return (
     <>
